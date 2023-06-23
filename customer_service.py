@@ -37,7 +37,8 @@ class CustomerService:
             self.supabase.postgrest.auth(access_token)
             user = jwt.decode(access_token,algorithms=["HS256"],options={"verify_signature": False})
             user_uid = user['sub']
-            data,count = self.supabase.table('customers').update(payload.dict()).eq('user_id',user_uid).execute()
+            payload = {k: v for k, v in payload.dict().items() if v is not None}
+            data,count = self.supabase.table('customers').update(payload).eq('user_id',user_uid).execute()
             return data[1]
         except postgrest.exceptions.APIError as e:
             e = e.args[0]
