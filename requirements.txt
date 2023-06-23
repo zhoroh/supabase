@@ -6,3 +6,5 @@ fastapi
 
 uvicorn
 pyjwt
+
+gotrue==0.5.4
